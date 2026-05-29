@@ -1,2 +1,11 @@
 # cushion_star_feeding_trial
 R Script and raw data for cushion sea star feeding trials
+
+
+Data analysis and raw data for paper "Corallivory by the cushion sea star Culcita novaeguineae in Hawai‘i"
+
+Authors: Daniela Escontrela Dieguez & Erik G. Brush
+DOI: https://doi.org/10.3354/meps15157
+Abstract: Understanding predator diets is essential for interpreting ecological processes such as competitive outcomes and prey behavior. The corallivorous (coral-eating) cushion sea star Culcita novaeguineae is an understudied predator with the potential to influence coral reef community dynamics. We examined the feeding preferences of this predator in situ and tested whether coral consumption was random. Experimental cages were deployed near a reef offshore of Waikīkī Beach, Hawaiʻi, USA, where pairwise comparisons between coral species were made while tracking consumption order. Coral consumption was non-random for all but 2 species. Using 3 methods to build feeding hierarchies, cushion sea stars consistently preferred Pocillopora spp. and avoided Porites spp. Although the rankings of other species varied slightly among methods, Pavona spp. and Montipora spp. were usually the next most preferred, followed by Leptastrea spp. or Lobactis scutaria. These results suggest that cushion sea stars are dietary specialists that can switch to less preferred prey when preferred corals are depleted. Coral tissue depth, morphology, and nutritional value likely help cushion sea stars extract higher energy from preferred coral species per unit time. As global stressors on coral reefs intensify, managing local outbreaks of corallivores will become increasingly important. Rising numbers of cushion sea stars around Oʻahu may hinder coral recovery, especially for Pocillopora spp., a key pioneer taxon already vulnerable to bleaching. These findings identify the coral species most vulnerable to sea star predation and provide insight into how predator–prey interactions may change under compounding environmental stressors.
+Keywords: culcita, cushion sea star, corallivory, feeding preference, predaiton, Hawaii, coral reef
+Recommended citation: Escontrela Dieguez D, Brush EG (in press) Corallivory by the cushion sea star Culcita novaeguineae in Hawai‘i. Mar Ecol Prog Ser :0-0 https://doi.org/10.3354/meps15157
