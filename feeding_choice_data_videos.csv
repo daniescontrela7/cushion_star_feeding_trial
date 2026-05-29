@@ -1,0 +1,135 @@
+﻿Exp_n,Cage,date_coral_in,time_coral_in,date_finish,combo_general_spp,coral_spp_general,cage_side,growth_form_1,max_d_1,ortho_d_1,height_1,consumed_FIRST,consumed_SECOND,not_consumed_1,not_consumed_2,method_order_determined,camera_evidence,n_videos_eating,n_pics_eating,n_hours_eat,date_time_start,visitied_first,first_eaten_visited_first,feeding_time,comments
+36,C077,1/21/21,12:24:00 PM,1/31/21,PMEA_MCAP,POSP,NORTH,BR,5,4.5,5,MCAP,PMEA,,,Y_VIDEO,color change_video,NA,NA,NA,NA,PMEA,Y,overnight,
+36,C077,1/21/21,12:24:00 PM,1/31/21,PMEA_MCAP,MCAP,SOUTH,EF,13,6.5,6,MCAP,PMEA,,,Y_VIDEO,ate on video,11,NA,11+,1/24/21 8:00,PMEA,Y,both_start_night,
+40,C081,1/21/21,12:37:00 PM,1/31/21,PLOB_MPAT,PORM,NORTH,MD,11.5,8.5,9.5,MPAT,,PLOB,,ate one,NA,NA,NA,NA,NA,MPAT,Y,NA,"cage started rolling around, coral broke off and then in 2"
+40,C081,1/21/21,12:37:00 PM,1/31/21,PLOB_MPAT,MPAT,SOUTH,EF,14,9,7,MPAT,,PLOB,,ate one,NA,NA,NA,NA,NA,MPAT,Y,overnight,"cage started rolling around, coral broke off and then in 2"
+43,C079,2/4/21,11:00:00 AM,2/11/21,PMEA_MPAT,POSP,NORTH,BR,10.5,5.5,12.5,MPAT,PMEA,,,Y_VIDEO,ate on video,1,NA,1+,2/7/21 7:00,MPAT,Y,both_start_night,got order of feeding from video. 
+43,C079,2/4/21,11:00:00 AM,2/11/21,PMEA_MPAT,MPAT,SOUTH,EF,9,5,6,MPAT,PMEA,,,Y_VIDEO,ate on video,8,NA,8+,2/6/21 7:00,MPAT,Y,both_start_night,got order of feeding from video. 
+47,C078,2/18/21,12:00:00 PM,3/4/21,PMEA_MCAP,POSP,SOUTH,BR,4,3,6.5,PMEA,MCAP,,,lab mates,NA,NA,NA,NA,NA,MCAP,N,overnight,
+47,C078,2/18/21,12:00:00 PM,3/4/21,PMEA_MCAP,MCAP,NORTH,EF,5,3,2.5,PMEA,MCAP,,,lab mates,NA,NA,NA,NA,NA,MCAP,N,overnight,
+48,C079,2/18/21,12:07:00 PM,3/4/21,PMEA_PCOM,POSP,NORTH,BR,10,6,8.5,PMEA,PCOM,,,Y_VIDEO,ate on first night,4,NA,4+,2/19/21 7:00,PMEA,Y,both_start_night,might have been eating the orange stringy stuff that was on the rock with the compressa; unintentionally eating PCOM
+48,C079,2/18/21,12:07:00 PM,3/4/21,PMEA_PCOM,PCOM,SOUTH,KN,11.5,7.5,8.5,PMEA,PCOM,,,Y_VIDEO,NA,NA,NA,NA,NA,PMEA,Y,overnight,might have been eating the orange stringy stuff that was on the rock with the compressa; unintentionally eating PCOM
+51,C152,3/18/21,4:09:00 PM,3/28/21,MCAP_MPAT,MCAP,SOUTH,EF,8,6.5,2.5,MPAT,MCAP,,,Y_VIDEO,NA,NA,NA,NA,NA,MCAP,N,overnight,did't see eating MCAP but ate MPAT within a day of starting trial
+51,C152,3/18/21,4:09:00 PM,3/28/21,MCAP_MPAT,MPAT,NORTH,EF,10,9.5,4,MPAT,MCAP,,,Y_VIDEO,ate on first night,12,NA,12+,3/19/21 7:00,MCAP,N,both_start_night,did't see eating MCAP but ate MPAT within a day of starting trial
+55,C153,3/18/21,4:13:00 PM,3/28/21,MCAP_MPAT,MCAP,NORTH,EF,3,2.5,2,MPAT,MCAP,,,Y_VIDEO,ate on video,12,NA,12+,3/22/21 7:00,MCAP,N,both_start_night,ate MPAT 3/21 and MCAP 3/22
+55,C153,3/18/21,4:13:00 PM,3/28/21,MCAP_MPAT,MPAT,SOUTH,EF,7.5,4.5,4.5,MPAT,MCAP,,,Y_VIDEO,ate on video,12,NA,12+,3/21/21 7:00,MCAP,N,both_start_night,ate MPAT 3/21 and MCAP 3/22
+61,C153,4/22/21,11:55:00 AM,4/29/21,PMEA_MPAT,POSP,NORTH,BR,14,11,12,PMEA,MPAT,,,Y_VIDEO,color change_video,NA,NA,NA,4/23/21-4/24-21,MPAT,N,overnight,Ate MPAT on 4/28 at 7am
+61,C153,4/22/21,11:55:00 AM,4/29/21,PMEA_MPAT,MPAT,SOUTH,EF,20.5,16.5,10.5,PMEA,MPAT,,,Y_VIDEO,ate on video,4,NA,4+,4/28/21 7:00,MPAT,N,both_start_night,Ate MPAT on 4/28 at 7am
+62,C077,4/22/21,11:58:00 AM,4/29/21,MCAP_MPAT,MCAP,NORTH,EF,6.5,6,2.5,MPAT,,MCAP,,ate one,NA,NA,NA,NA,NA,MCAP,N,NA,
+62,C077,4/22/21,11:58:00 AM,4/29/21,MCAP_MPAT,MPAT,SOUTH,EF,8.5,3,2,MPAT,,MCAP,,ate one,NA,NA,NA,NA,NA,MCAP,N,overnight,
+66,C153,5/6/21,1:55:00 PM,5/13/21,PMEA_MPAT,POSP,NORTH,BR,8,4.5,5.5,PMEA,,MPAT,,ate one,color change_video,NA,NA,NA,5/7/21-5/8/21,PMEA,Y,overnight,
+66,C153,5/6/21,1:55:00 PM,5/13/21,PMEA_MPAT,MPAT,SOUTH,EF,11,5,4,PMEA,,MPAT,,ate one,NA,NA,NA,NA,NA,PMEA,Y,NA,
+67,C077,5/6/21,11:45:00 AM,5/13/21,PMEA_MPAT,POSP,SOUTH,BR,4.5,3.5,7.5,PMEA,MPAT,,,Y_VIDEO,color change_video,NA,NA,NA,5/6/21-5/7/21,PMEA,Y,overnight,"algae on POSP, not MPAT -  also suggests POSP eaten first"
+67,C077,5/6/21,11:45:00 AM,5/13/21,PMEA_MPAT,MPAT,NORTH,EF,5.5,3.5,3.5,PMEA,MPAT,,,Y_VIDEO,ate on video,12,NA,12+,5/10/21 7:00,PMEA,Y,both_start_night,"algae on POSP, not MPAT -  also suggests POSP eaten first"
+69,C079,5/6/21,11:15:00 AM,5/13/21,PMEA_MCAP,POSP,SOUTH,BR,6,5,5.5,PMEA,,MCAP,,ate one,NA,NA,NA,NA,NA,NA,NA,overnight,
+69,C079,5/6/21,11:15:00 AM,5/13/21,PMEA_MCAP,MCAP,NORTH,EF,6.5,5,4,PMEA,,MCAP,,ate one,NA,NA,NA,NA,NA,NA,NA,NA,
+70,C152,5/6/21,10:55:00 AM,5/13/21,PLOB_MPAT,PORM,SOUTH,MD,9.5,6,5.5,MPAT,,PLOB,,ate one,NA,NA,NA,NA,NA,PORM,N,NA,
+70,C152,5/6/21,10:55:00 AM,5/13/21,PLOB_MPAT,MPAT,NORTH,EF,18,9,8.5,MPAT,,PLOB,,ate one,ate on video,12,NA,12+,5/8/21 7:00,PORM,N,both_start_night,
+74,C077,5/20/21,11:49:00 AM,5/27/21,PMEA_MCAP,POSP,NORTH,BR,10.5,6.5,9.5,PMEA,,MCAP,,ate one,ate on video,1,NA,1+,5/21/21 7:00,PMEA,Y,both_start_night,
+74,C077,5/20/21,11:49:00 AM,5/27/21,PMEA_MCAP,MCAP,SOUTH,EF,10.5,10,6,PMEA,,MCAP,,ate one,NA,NA,NA,NA,NA,PMEA,Y,NA,
+75,C153,5/20/21,12:00:00 PM,5/27/21,PMEA_MPAT,POSP,NORTH,BR,11.5,10,27,MPAT,,PGRA,,ate one,NA,NA,NA,NA,NA,MPAT,Y,NA,
+75,C153,5/20/21,12:00:00 PM,5/27/21,PMEA_MPAT,MPAT,SOUTH,EF,17,15,14,MPAT,,PGRA,,ate one,ate on video,13,NA,13+,5/26/21 6:00,MPAT,Y,both_start_night,
+76,C152,6/24/21,1:55:00 PM,7/1/21,PMEA_PCOM,PCOM,NORTH,KN,8.5,6,6,PMEA,,PCOM,,ate one,NA,NA,NA,NA,NA,PCOM,N,NA,
+76,C152,6/24/21,1:55:00 PM,7/1/21,PMEA_PCOM,POSP,SOUTH,BR,12,9.5,10.5,PMEA,,PCOM,,ate one,NA,NA,NA,NA,N/A,PCOM,N,overnight,
+77,C079,6/24/21,2:09:00 PM,7/1/21,PMEA_PCOM,PCOM,SOUTH,KN,5,2,4.5,PMEA,,PCOM,,ate one,NA,NA,NA,NA,NA,PCOM,N,NA,
+77,C079,6/24/21,2:09:00 PM,7/1/21,PMEA_PCOM,POSP,NORTH,BR,7.5,4,8,PMEA,,PCOM,,ate one,color change_video,NA,NA,NA,6/26/21-6/27/21,PCOM,N,overnight,
+83,C078,7/22/21,1:44:00 PM,7/29/21,PMEA_PCOM,PCOM,NORTH,KN,2.5,2,4.5,PMEA,,PCOM,,ate one,NA,NA,NA,NA,NA,PCOM,N,NA,
+83,C078,7/22/21,1:44:00 PM,7/29/21,PMEA_PCOM,POSP,SOUTH,BR,4,1.5,5,PMEA,,PCOM,,ate one,NA,NA,NA,NA,NA,PCOM,N,overnight,
+84,C077,7/22/21,1:57:00 PM,7/29/21,PLOB_MPAT,PORM,NORTH,MD,12,9.5,11,MPAT,,PLOB,,ate one,NA,NA,NA,NA,NA,MPAT,Y,NA,
+84,C077,7/22/21,1:57:00 PM,7/29/21,PLOB_MPAT,MPAT,SOUTH,EF,15.5,10,6.5,MPAT,,PLOB,,ate one,NA,NA,NA,NA,NA,MPAT,Y,overnight,
+85,C153,7/22/21,2:05:00 PM,7/29/21,PLOB_MPAT,PORM,NORTH,MD,7.5,6.5,4,MPAT,,PLOB,,ate one,NA,NA,NA,NA,NA,MPAT,Y,NA,
+85,C153,7/22/21,2:05:00 PM,7/29/21,PLOB_MPAT,MPAT,SOUTH,EF,11.5,6.5,5.5,MPAT,,PLOB,,ate one,ate on video,1,NA,1+,7/23/21 6:00,MPAT,Y,both_start_night,
+86,C152,8/5/21,2:19:00 PM,8/12/21,PLOB_MPAT,PORM,SOUTH,MD,12,9,9,MPAT,,PLOB,,ate one,NA,NA,NA,NA,NA,MPAT,Y,NA,
+86,C152,8/5/21,2:19:00 PM,8/12/21,PLOB_MPAT,MPAT,NORTH,EF,22,13,9,MPAT,,PLOB,,ate one,ate on video,2,NA,2+,8/6/21 6:00,MPAT,Y,both_start_night,
+87,C079,8/5/21,2:09:00 PM,8/12/21,PLOB_MPAT,PORM,NORTH,MD,12,9.5,9,MPAT,,PLOB,,ate one,NA,NA,NA,NA,NA,MPAT,Y,NA,
+87,C079,8/5/21,2:09:00 PM,8/12/21,PLOB_MPAT,MPAT,SOUTH,EF,12,9,9,MPAT,,PLOB,,ate one,NA,NA,NA,NA,NA,MPAT,Y,overnight,
+88,C078,8/5/21,2:20:00 PM,8/12/21,PMEA_PCOM,POSP,NORTH,BR,6,4,8,PMEA,,PCOM,,ate one,color change_video,NA,NA,NA,8/5/21-8/6/21,NA,NA,overnight,also ate POSP that was growing on cage
+88,C078,8/5/21,2:20:00 PM,8/12/21,PMEA_PCOM,PCOM,SOUTH,KN,8,6,10,PMEA,,PCOM,,ate one,NA,NA,NA,NA,NA,NA,NA,NA,also ate POSP that was growing on cage
+89,C077,8/5/21,2:27:00 PM,8/12/21,PMEA_PCOM,POSP,NORTH,BR,4,2,6.5,PMEA,,PCOM,,ate one,NA,NA,NA,NA,NA,PCOM,N,overnight,
+89,C077,8/5/21,2:27:00 PM,8/12/21,PMEA_PCOM,PCOM,SOUTH,KN,4,2.5,6.5,PMEA,,PCOM,,ate one,NA,NA,NA,NA,NA,PCOM,N,NA,
+93,C082,9/16/21,1:58:00 PM,9/23/21,PMEA_FSCU,POSP,SOUTH,EF,13,12,11,PMEA,,FSCU,,ate one,NA,NA,NA,NA,NA,PMEA,Y,overnight,ate pocillopora by 9/19 (checked in person)
+93,C082,9/16/21,1:58:00 PM,9/23/21,PMEA_FSCU,FSCU,NORTH,EF,8.5,7,3,PMEA,,FSCU,,ate one,NA,NA,NA,NA,NA,PMEA,Y,NA,ate pocillopora by 9/19 (checked in person)
+94,C077,9/16/21,2:03:00 PM,9/23/21,PCOM_MPAT,MPAT,NORTH,EF,20,14.5,12,MPAT,,PCOM,,ate one,ate on video,1,NA,1+,9/22/21 18:00,MPAT,Y,both_day_start,ate it twice on separate occassions
+94,C077,9/16/21,2:03:00 PM,9/23/21,PCOM_MPAT,PCOM,SOUTH,KN,26,11,9.5,MPAT,,PCOM,,ate one,NA,NA,NA,NA,NA,MPAT,Y,NA,
+96,C152,9/30/21,1:34:00 PM,10/7/21,LESP_PMEA,POSP,SOUTH,BR,7,4,7,PMEA,,LESP,,ate one,NA,NA,NA,NA,NA,NA,NA,overnight,
+96,C152,9/30/21,1:34:00 PM,10/7/21,LESP_PMEA,LESP,NORTH,EF,6,3.5,2,PMEA,,LESP,,ate one,NA,NA,NA,NA,NA,NA,NA,NA,"hard to tell if it ate the leptastrea, skeleton was a little white at the end but unsure. "
+98,C082,9/30/21,2:10:00 PM,10/7/21,LESP_PMEA,POSP,NORTH,BR,5,1.5,4,PMEA,LESP,,,Y_VIDEO,color change_video,NA,NA,NA,10/2/21-10/3/21,LESP,N,overnight,
+98,C082,9/30/21,2:10:00 PM,10/7/21,LESP_PMEA,LESP,SOUTH,EF,11.5,4.5,5,PMEA,LESP,,,Y_VIDEO,ate on video,5,NA,5+,10/5/21 6:30,LESP,N,both_start_night,
+99,C077,9/30/21,2:13:00 PM,10/7/21,LESP_PMEA,POSP,NORTH,BR,8,4.5,7.5,PMEA,,LESP,,ate one,ate on video,2,NA,2+,10/1/21 6:30,PMEA,Y,both_start_night,
+99,C077,9/30/21,2:13:00 PM,10/7/21,LESP_PMEA,LESP,SOUTH,EF,12,6,8,PMEA,,LESP,,ate one,NA,NA,NA,NA,NA,PMEA,Y,NA,"hard to tell if it ate the leptastrea, skeleton was a little white at the end but unsure. "
+100,C153,9/30/21,1:55:00 PM,10/7/21,PVAR_PMEA,POSP,NORTH,BR,6.5,10,7.5,PVAR,PMEA,,,Y_VIDEO,ate on video,1,NA,1+,10/2/21 6:30,PVAR,Y,both_start_night,
+100,C153,9/30/21,1:55:00 PM,10/7/21,PVAR_PMEA,PVAR,SOUTH,EF,8,7,3.5,PVAR,PMEA,,,Y_VIDEO,ate on video,12,NA,12+,10/1/21 6:30,PVAR,Y,both_start_night,
+101,C152,10/15/21,11:22:00 AM,10/22/21,PDUE_PMEA,POSP,SOUTH,BR,6.5,4,5,PDUE,PMEA,,,Y_VIDEO,color change_video,NA,NA,NA,10/16/21-10/17/21,PDUE,Y,overnight,
+101,C152,10/15/21,11:22:00 AM,10/22/21,PDUE_PMEA,PDUE,NORTH,ML,8.5,2,8.5,PDUE,PMEA,,,Y_VIDEO,ate on video,12,NA,12+,10/16/21 6:30,PDUE,Y,both_start_night,
+103,C082,10/15/21,10:04:00 AM,10/22/21,PDUE_PMEA,POSP,NORTH,BR,7,4,4.5,PDUE,PMEA,,,Y_VIDEO,color change_video,NA,NA,NA,10/16/21-10/17/21,PDUE,Y,overnight,
+103,C082,10/15/21,10:04:00 AM,10/22/21,PDUE_PMEA,PDUE,SOUTH,ML,5,2,5.5,PDUE,PMEA,,,Y_VIDEO,ate on video,1,NA,1+,10/16/21 6:30,PDUE,Y,both_start_night,
+105,C153,10/15/21,11:16:00 AM,10/22/21,PDUE_PMEA,POSP,NORTH,BR,8.5,5.5,12,PMEA,PDUE,,,Y_VIDEO,color change_video,NA,NA,NA,10/15/21-10/16/21,PMEA,Y,overnight,
+105,C153,10/15/21,11:16:00 AM,10/22/21,PDUE_PMEA,PDUE,SOUTH,EF,5,1.5,11,PMEA,PDUE,,,Y_VIDEO,ate on video,7,NA,7+,10/17/21 6:30,PMEA,Y,both_start_night,
+106,C152,10/29/21,10:10:00 AM,11/5/21,PCOM_MCAP,PCOM,NORTH,KN,6.5,4,12,MCAP,,PCOM,,ate one,NA,NA,NA,NA,NA,MCAP,Y,NA,
+106,C152,10/29/21,10:10:00 AM,11/5/21,PCOM_MCAP,MCAP,SOUTH,EF,12,10.5,4,MCAP,,PCOM,,ate one,ate on both cams,5,182,5+,10/30/21 6:30,MCAP,Y,both_start_night,
+107,C083,10/29/21,10:05:00 AM,11/5/21,LESP_PMEA,POSP,NORTH,BR,7.5,5,8,PMEA,LESP,,,Y_KILO,color change_kilo,NA,NA,NA,10/30/21-10/31/21,NA,NA,overnight,
+107,C083,10/29/21,10:05:00 AM,11/5/21,LESP_PMEA,LESP,SOUTH,EF,9,6.5,6,PMEA,LESP,,,Y_KILO,color change_kilo,NA,NA,NA,11/2/21-11/3/21,NA,NA,overnight,
+108,C082,10/29/21,10:00:00 AM,11/5/21,PDUE_PMEA,POSP,NORTH,BR,5,2.5,7.5,PMEA,,PDUE,,ate one,color change_kilo,NA,NA,NA,10/29/21-10/30/21,PMEA,Y,overnight,
+108,C082,10/29/21,10:00:00 AM,11/5/21,PDUE_PMEA,PDUE,SOUTH,ML,8.5,5,6.5,PMEA,,PDUE,,ate one,NA,NA,NA,NA,NA,PMEA,Y,NA,
+111,C152,11/11/21,2:22:00 PM,11/18/21,LESP_MPAT,LESP,NORTH,EF,11.5,6,6.5,MPAT,,LESP,,ate one,NA,NA,NA,NA,NA,LESP,N,NA,
+111,C152,11/11/21,2:22:00 PM,11/18/21,LESP_MPAT,MPAT,SOUTH,EF,8.5,7,4.5,MPAT,,LESP,,ate one,ate on video,6,NA,6+,11/13/21 7:30,LESP,N,both_start_night,
+112,C083,11/11/21,2:20:00 PM,11/18/21,LESP_MPAT,LESP,NORTH,EF,10,5.5,3,LESP,MPAT,,,Y_KILO,color change_kilo,NA,NA,NA,11/13/21-11/14/21,NA,NA,overnight,
+112,C083,11/11/21,2:20:00 PM,11/18/21,LESP_MPAT,MPAT,SOUTH,EF,8.5,4,2.5,LESP,MPAT,,,Y_KILO,color change_kilo,NA,NA,NA,11/15/21-11/16/21,NA,NA,overnight,
+113,C082,11/11/21,2:18:00 PM,11/18/21,PDUE_PMEA,POSP,NORTH,BR,7,3.5,9,PDUE,PMEA,,,Y_BOTH,color change_video,NA,NA,NA,11/13/21-11/14/21,PDUE,Y,overnight,
+113,C082,11/11/21,2:18:00 PM,11/18/21,PDUE_PMEA,PDUE,SOUTH,ML,7.5,6.5,10,PDUE,PMEA,,,Y_BOTH,ate on both cams,6,72,6+,11/12/21 6:30,PDUE,Y,both_start_night,
+114,C077,11/11/21,2:16:00 PM,11/18/21,PVAR_PMEA,PVAR,NORTH,EF,7,4.5,4.5,PMEA,PVAR,,,Y_BOTH,color change_kilo,NA,NA,NA,11/13/21-11/14/21,PMEA,Y,overnight,
+114,C077,11/11/21,2:16:00 PM,11/18/21,PVAR_PMEA,POSP,SOUTH,BR,6,3,7.5,PMEA,PVAR,,,Y_BOTH,color change_video,NA,NA,NA,11/11/21-11/12/21,PMEA,Y,overnight,
+115,C153,11/11/21,2:14:00 PM,11/14/21,PVAR_PMEA,PVAR,SOUTH,EF,18.5,8.5,8.5,PVAR,PMEA,,,Y_BOTH,color change_kilo,NA,NA,NA,11/11/21-11/12/21,PVAR,Y,overnight,
+115,C153,11/11/21,2:14:00 PM,11/14/21,PVAR_PMEA,POSP,NORTH,BR,4.5,2.5,6,PVAR,PMEA,,,Y_BOTH,color change_video,NA,NA,NA,11/12/21-11/13/21,PVAR,Y,overnight,
+120,C154,5/25/22,2:10:00 PM,6/9/22,PCOM_PLOB,PCOM,NORTH,KN,12,7,5.5,PCOM,,PLOB,,ate one,ate on kilo cam,NA,52,NA,NA,NA,NA,NA,"may have revisited, ate almost 24 hours and varely removed tissue"
+120,C154,5/25/22,2:10:00 PM,6/9/22,PCOM_PLOB,PORM,SOUTH,MD,11,7.5,4.5,PCOM,,PLOB,,ate one,NA,NA,NA,NA,NA,NA,NA,NA,"coral burried in sand, not consumed"
+125,C154,6/9/22,1:12:00 PM,6/15/22,PLOB_MCAP,MCAP,NORTH,EF,12,11,9,MCAP,PLOB,,,Y_VIDEO,ate on video,19,NA,19+,6/10/22 6:00,PLOB,N,both_start_night,"ate MCAP through the night, took over 24 hours"
+125,C154,6/9/22,1:12:00 PM,6/15/22,PLOB_MCAP,PORM,SOUTH,MD,13,12,12,MCAP,PLOB,,,Y_VIDEO,ate on video,13,NA,13+,6/12/22 6:00,PLOB,N,both_start_night,"Ate this for a whole day (and probably into the night) and still was not able to remove all tissue, it was just sloughing off"
+126,C158,6/24/22,1:30:00 PM,7/8/22,MCAP_FSCU,MCAP,SOUTH,EF,11,10,6,MCAP,,FSCU,,ate one,ate on kilo cam,NA,20,5+,7/1/22 6:00,FSCU,N,both_start_night,left a little bit of coral on there
+126,C158,6/24/22,1:30:00 PM,7/8/22,MCAP_FSCU,FSCU,NORTH,FR,8,10,3,MCAP,,FSCU,,ate one,NA,NA,NA,NA,NA,FSCU,N,NA,
+127,C157,6/24/22,1:46:00 PM,7/8/22,MPAT_PDUE,MPAT,SOUTH,EF,14,14,8,PDUE,MPAT,,,Y_KILO,color change_kilo,NA,NA,NA,6/26/22-6/27/22,MPAT,N,overnight,
+127,C157,6/24/22,1:46:00 PM,7/8/22,MPAT_PDUE,PDUE,NORTH,ML,8,7,4.5,PDUE,MPAT,,,Y_KILO,ate on kilo cam,NA,41,10+,6/26/22 6:00,MPAT,N,both_start_night,probably started at night
+128,C156,6/24/22,1:51:00 PM,7/8/22,MPAT_PDUE,MPAT,SOUTH,EF,7.5,5.5,3,PDUE,,MPAT,,ate one,NA,NA,NA,NA,NA,MPAT,N,NA,
+128,C156,6/24/22,1:51:00 PM,7/8/22,MPAT_PDUE,PDUE,NORTH,ML,9.5,4.5,2.5,PDUE,,MPAT,,ate one,ate on kilo cam,NA,15,NA,6/29/22 6:00,MPAT,N,both_start_night,probably started at night
+129,C155,6/24/22,2:07:00 PM,7/8/22,MPAT_PDUE,MPAT,SOUTH,EF,10,6,3,MPAT,PDUE,,,Y_KILO,ate on kilo cam,NA,47,11+,6/25/22 6:00,MPAT,Y,both_start_night,probably started at night
+129,C155,6/24/22,2:07:00 PM,7/8/22,MPAT_PDUE,PDUE,NORTH,ML,10,3.5,3,MPAT,PDUE,,,Y_KILO,ate on kilo cam,NA,47,11+,6/26/22 6:00,MPAT,Y,both_start_night,probably started at night
+130,C154,6/24/22,2:16:00 PM,7/8/22,PVAR_PMEA,PVAR,SOUTH,EF,13,12.5,6,PMEA,PVAR,,,Y_KILO,ate on kilo cam,NA,56,15+,6/25/22 6:00,PVAR,N,both_start_night,probably started at night
+130,C154,6/24/22,2:16:00 PM,7/8/22,PVAR_PMEA,POSP,NORTH,BR,4,3,9,PMEA,PVAR,,,Y_KILO,color change_kilo,NA,NA,NA,6/24/22-6/25/22,PVAR,N,overnight,
+131,C161,8/24/22,1:14:00 PM,8/31/22,MCAP_FSCU,FSCU,SOUTH,FR,12,7.5,2,MCAP,,FSCU,,ate one,NA,NA,NA,NA,NA,FSCU,N,NA,"cuno ""inspected"" the FSCU"
+131,C161,8/24/22,1:14:00 PM,8/31/22,MCAP_FSCU,MCAP,NORTH,EF,12,9,5,MCAP,,FSCU,,ate one,ate on kilo cam,NA,49,12+,6/28/22 6:00,FSCU,N,both_start_night,
+132,C162,8/24/22,1:09:00 PM,8/31/22,PCOM_PLOB,PORM,SOUTH,MD,10,8,5,PCOM,,PLOB,,ate one,NA,NA,NA,NA,NA,NA,NA,NA,
+132,C162,8/24/22,1:09:00 PM,8/31/22,PCOM_PLOB,PCOM,NORTH,KN,11,6,5,PCOM,,PLOB,,ate one,ate on kilo cam,NA,40,10+,8/30/22 6:00,NA,NA,both_start_night,did not remove all tissue
+133,C156,8/24/22,12:58:00 PM,8/31/22,MPAT_PDUE,MPAT,SOUTH,EF,13,7.5,7,PDUE,MPAT,,,Y_KILO,ate on kilo cam,NA,7,2+,8/31/22 6:00,MPAT,N,both_start_night,very low tissue removal
+133,C156,8/24/22,12:58:00 PM,8/31/22,MPAT_PDUE,PDUE,NORTH,ML,9.5,6,4.5,PDUE,MPAT,,,Y_KILO,ate on kilo cam,NA,23,6+,8/29/23 6:00,MPAT,N,both_start_night,
+136,C161,8/31/22,2:17:00 PM,9/14/22,PCOM_FSCU,PCOM,NORTH,KN,18,11,9,PCOM,,FSCU,,ate one,ate on kilo cam,NA,22,6+,9/8/22 6:00,NA,NA,both_start_night,ate just one branch
+136,C161,8/31/22,2:17:00 PM,9/14/22,PCOM_FSCU,FSCU,SOUTH,FR,10,7.5,3,PCOM,,FSCU,,ate one,NA,NA,NA,NA,NA,NA,NA,NA,
+137,C162,8/31/22,2:13:00 PM,9/14/22,MPAT_PVAR,PVAR,NORTH,EF,16,13,8,MPAT,PVAR,,,Y_KILO,color change_kilo,NA,NA,NA,9/9/22-9/10/22,MPAT,Y,overnight,
+137,C162,8/31/22,2:13:00 PM,9/14/22,MPAT_PVAR,MPAT,SOUTH,EF,5.5,5.5,1,MPAT,PVAR,,,Y_KILO,color change_kilo,NA,NA,NA,9/2/22-9/3/22,MPAT,Y,overnight,
+138,C156,8/31/22,2:08:00 PM,9/14/22,MPAT_PVAR,PVAR,NORTH,EF,19,13,17,MPAT,PVAR,,,Y_BOTH,ate on both cams,3,13,3+,9/2/22 6:30,MPAT,Y,both_start_night,
+138,C156,8/31/22,2:08:00 PM,9/14/22,MPAT_PVAR,MPAT,SOUTH,EF,7.5,6,5,MPAT,PVAR,,,Y_BOTH,ate on both cams,9,34,9+,9/1/22 6:00,MPAT,Y,both_start_night,
+139,C157,8/31/22,2:03:00 PM,9/14/22,MCAP_FSCU,MCAP,NORTH,EF,15,11,8,FSCU,,MCAP,,ate one,NA,NA,NA,NA,NA,MCAP,N,NA,
+139,C157,8/31/22,2:03:00 PM,9/14/22,MCAP_FSCU,FSCU,SOUTH,FR,11.5,5,2,FSCU,,MCAP,,ate one,ate on kilo cam,NA,48,12+,9/11/22 6:00,MCAP,N,both_start_night,"ate towards the end of the 2 weeks after coral had spent 10 days trying to keep sand off, probably ate cause tissues were stressed and out and was producing a lot of mucus"
+142,C157,9/21/22,12:40:00 PM,9/30/22,MPAT_PVAR,MPAT,NORTH,EF,16,12,8,PVAR,MPAT,,,Y_KILO,color change_kilo,NA,NA,NA,9/24/22-9/25/22,NA,NA,overnight,
+142,C157,9/21/22,12:40:00 PM,9/30/22,MPAT_PVAR,PVAR,SOUTH,EF,9,5,4,PVAR,MPAT,,,Y_KILO,ate on kilo cam,NA,49,12+,9/24/22 6:00,NA,NA,both_start_night,
+143,C156,9/21/22,12:50:00 PM,9/30/22,MPAT_FSCU,FSCU,NORTH,FR,8.5,6,2,MPAT,,FSCU,,ate one,NA,NA,NA,NA,NA,MPAT,Y,NA,
+143,C156,9/21/22,12:50:00 PM,9/30/22,MPAT_FSCU,MPAT,SOUTH,EF,16,10,3,MPAT,,FSCU,,ate one,ate on kilo cam,NA,49,12+,9/26/22 6:00,MPAT,Y,both_start_night,
+149,C162,9/30/22,1:52:00 PM,10/5/22,MPAT_FSCU,MPAT,NORTH,EF,16,8,8,FSCU,,MPAT,,ate one,NA,NA,NA,NA,NA,FSCU,Y,NA,
+149,C162,9/30/22,1:52:00 PM,10/5/22,MPAT_FSCU,FSCU,SOUTH,FR,9,6,3,FSCU,,MPAT,,ate one,ate on both cams,12,48,12+,10/3/22 6:00,FSCU,Y,both_start_night,
+152,C157,10/12/22,2:06:00 PM,10/19/22,MPAT_FSCU,MPAT,NORTH,EF,16,13,5,MPAT,FSCU,,,Y_KILO,color change_kilo,NA,NA,NA,10/12/22-10/13/22,MPAT,Y,overnight,
+152,C157,10/12/22,2:06:00 PM,10/19/22,MPAT_FSCU,FSCU,SOUTH,FR,10,8.5,2.5,MPAT,FSCU,,,Y_KILO,ate on kilo cam,NA,47,12+,10/15/22 6:00,MPAT,Y,both_start_night,
+154,C162,10/12/22,1:50:00 PM,10/19/22,PLOB_FSCU,FSCU,NORTH,FR,10,7,3,FSCU,PLOB,,,Y_KILO,ate on kilo cam,NA,47,12+,10/14/22 6:00,NA,NA,both_start_night,
+154,C162,10/12/22,1:50:00 PM,10/19/22,PLOB_FSCU,PORM,SOUTH,MD,19,13,8,FSCU,PLOB,,,Y_KILO,ate on kilo cam,NA,25,7+,10/17/22 6:00,NA,NA,both_start_night,
+155,C161,10/12/22,1:45:00 PM,10/19/22,PLOB_FSCU,PORM,NORTH,MD,14,13,5,FSCU,,PLOB,,ate one,NA,NA,NA,NA,NA,PLOB,N,NA,
+155,C161,10/12/22,1:45:00 PM,10/19/22,PLOB_FSCU,FSCU,SOUTH,FR,11,7.5,3,FSCU,,PLOB,,ate one,ate on kilo cam,NA,48,12+,10/13/22 6:00,PLOB,N,both_start_night,
+156,C163,10/19/22,2:05:00 PM,10/26/22,MCAP_MPAT,MCAP,NORTH,EF,12,11.5,7.5,MPAT,MCAP,,,Y_KILO,color change_kilo,NA,NA,NA,10/21/22-10/22/22,MPAT,Y,overnight,
+156,C163,10/19/22,2:05:00 PM,10/26/22,MCAP_MPAT,MPAT,SOUTH,EF,8.5,5.5,3.5,MPAT,MCAP,,,Y_KILO,color change_kilo,NA,NA,NA,10/19/22-10/20/22,MPAT,Y,overnight,
+157,C157,10/19/22,2:15:00 PM,10/26/22,LESP_PMEA,LESP,NORTH,EF,19,16,8,PMEA,,LESP,,ate one,NA,NA,NA,NA,NA,PMEA,Y,NA,
+157,C157,10/19/22,2:15:00 PM,10/26/22,LESP_PMEA,POSP,SOUTH,BR,15.5,9,13,PMEA,,LESP,,ate one,ate on both cams,3,12,3+,10/20/22 6:00,PMEA,Y,both_start_night,
+158,C156,10/19/22,4:16:00 PM,10/26/22,PVAR_PMEA,PVAR,NORTH,EF,12,7,6,PMEA,PVAR,,,Y_BOTH,ate on both cams,11,43,11+,10/22/22 6:00,PMEA,Y,both_start_night,
+158,C156,10/19/22,4:16:00 PM,10/26/22,PVAR_PMEA,POSP,SOUTH,BR,9,7.5,4,PMEA,PVAR,,,Y_BOTH,color change_kilo,NA,NA,NA,10/19/22-10/20/22,PMEA,Y,overnight,
+160,C161,10/19/22,4:34:00 PM,10/26/22,MPAT_PVAR,PVAR,NORTH,EF,6,5,5.5,MPAT,,PVAR,,ate one,NA,NA,NA,NA,NA,PVAR,N,NA,
+160,C161,10/19/22,4:34:00 PM,10/26/22,MPAT_PVAR,MPAT,SOUTH,EF,6.5,4,4.5,MPAT,,PVAR,,ate one,ate on kilo cam,NA,31,7+,10/23/22 6:00,PVAR,N,both_start_night,
+166,C163,11/30/22,12:56:00 PM,12/7/22,PDUE_PMEA,POSP,NORTH,BR,5,4,4,PMEA,PDUE,,,Y_BOTH,color change_kilo,NA,,NA,12/1/22-12/2/22,PDUE,N,overnight,
+166,C163,11/30/22,12:56:00 PM,12/7/22,PDUE_PMEA,PDUE,SOUTH,ML,4.5,4,1.5,PMEA,PDUE,,,Y_BOTH,ate on both cams,6,26,6+,12/2/22 6:00,PDUE,N,both_start_night,
+167,C157,11/30/22,1:02:00 PM,12/7/22,PVAR_PMEA,POSP,NORTH,BR,5.5,1.5,12.5,PVAR,PMEA,,,Y_KILO,color change_kilo,NA,NA,NA,12/1/22-12/2/22,PVAR,Y,overnight,
+167,C157,11/30/22,1:02:00 PM,12/7/22,PVAR_PMEA,PVAR,SOUTH,EF,7,3.5,4,PVAR,PMEA,,,Y_KILO,color change_kilo,NA,NA,NA,11/30/22-12/1/22,PVAR,Y,overnight,

@@ -1,0 +1,954 @@
+---
+title: "feeding_preference_data_analysis"
+output: html_document
+date: "2023-01-10"
+---
+```{r packages}
+library("measurements")
+library("ggplot2")
+library("ggthemes")
+library("dplyr")
+library("forcats")
+library("here")
+library("tidyr")
+library("rstatix")
+```
+
+```{r data clean up}
+cushions_orig <- read.csv(here("./feeding_choice_data.csv"))
+
+#as.factor
+cushions_orig <- cushions_orig %>%
+  mutate(across(c(1:5, 7, 13, 14, 17, 18, 25:31, 39:46), as.factor))
+
+#as.numeric
+cushions_orig <- cushions_orig %>%
+  mutate(across(c(6, 10:12, 15, 19, 24, 32:38), as.numeric))
+
+#convert cuno depth to meters
+cushions_orig$cuno_depth <- conv_unit(cushions_orig$cuno_depth, "ft", "m")
+
+str(cushions_orig)
+```
+
+```{r avg trial summary data}
+starve_avg <- round(mean(cushions_orig$days_starved), 2)
+# starve_avg #average number of days cushion stars were starved
+starve_SD <- round(sd(cushions_orig$days_starved), 2)
+#starve_SD #standard deviation for starvation time
+
+trial_avg <- round(mean(cushions_orig$trial_length), 2)
+# trial_avg #average number of days trial lasted
+trial_SD <- round(sd(cushions_orig$trial_length), 2)
+# trial_SD #standard deviation for trial time
+
+cushions_orig$combined <- cushions_orig$trial_length + cushions_orig$days_starved #sum of starvation and trial
+starve_and_trial_avg <- round(mean(cushions_orig$combined), 2)
+# starve_and_trial_avg #average for sum of starvation and trial length
+starve_and_trial_SD <- round(sd(cushions_orig$combined), 2)
+# starve_and_trial_SD #standard deciation for sum of starvation and trial length
+
+#combine data above into a data frame
+trial_info <- c("starve", "trial", "combined")
+averages <- c(starve_avg, trial_avg, starve_and_trial_avg)
+st_devs <- c(starve_SD, trial_SD, starve_and_trial_SD)
+trial_summary_data <- cbind(trial_info, averages, st_devs)
+trial_summary_data
+```
+
+```{r cushion star summary data}
+cuno_size_avg <- round(mean(cushions_orig$cuno_size), 2)
+# cuno_size_avg #avergae size of cushion stars in cm
+cuno_size_SD <- round(sd(cushions_orig$cuno_size), 2)
+
+# cuno_size_SD #standard deviation for cuno size in cm
+
+cuno_depth_avg <- round(mean(cushions_orig$cuno_depth), 2)
+# cuno_depth_avg #avergage depth (in m) at which cushion stars were found
+cuno_depth_SD <- round(sd(cushions_orig$cuno_depth), 2)
+# cuno_depth_SD #standard deviation for depth (in m) at which cushion stars were found
+
+sqrt_n <- sqrt(nrow(cushions_orig)/2)
+
+#combine data from above
+cuno_info <- c("size (cm)", "depth (m)")
+averages <- c(cuno_size_avg, cuno_depth_avg)
+std_dev <- c(cuno_size_SD, cuno_depth_SD)
+cuno_summary_data <- cbind(cuno_info, averages, std_dev)
+cuno_summary_data
+range(cushions_orig$cuno_size)
+```
+
+
+```{r video data}
+video_dat <- read.csv(here("./feeding_choice_data_videos.csv"))
+video_dat <- video_dat[-c(135),] #remove extra random columns
+# str(video_dat) #check data
+video_dat$first_eaten_visited_first <- as.factor(video_dat$first_eaten_visited_first)
+video_dat$feeding_time <- as.factor(video_dat$feeding_time)
+#str(video_dat) #check data
+
+visited_first <- prop.table(table(video_dat$first_eaten_visited_first))
+# length(which(video_dat$first_eaten_visited_first == "Y"))/2
+# length(which(video_dat$first_eaten_visited_first == "N"))/2
+visited_first
+#Y = cushion star visited first the coral it ate first
+#N = cushion star visited the coral it didn't eat first
+
+feeding_time <- prop.table(table(video_dat$feeding_time))
+# unique(video_dat$feeding_time)
+# length(which(video_dat$feeding_time == "overnight"))
+# length(which(video_dat$feeding_time == "both_start_night"))
+# length(which(video_dat$feeding_time == "both_day_start"))
+feeding_time
+#both_day start = started eating the night before and continued to eat into the night
+#both_start_night = started to eat before dawna and continued to eat during the day
+#overnight = only ate during the night
+```
+
+```{r}
+unique(cushions_orig$coral_spp_PISFC)
+which(cushions_orig$coral_spp_PISFC == "PLOB" & cushions_orig$ate == "YES")
+```
+
+```{r assign shapes to each coral spp}
+cushions_orig$shape <- c(NA) #create an empty column in data frame
+
+coral_spp <- as.vector(unique(cushions_orig$coral_spp_general)) #create a vector w/ the coral spp
+coral_spp
+
+coral_shapes <- c("hemisphere", "cylinder", "disk", "rec_plate", "cylinder", "rec_plate", "rec_plate", "rec_plate", "rec_plate") #shapes assigned to each coral spp (in same order as coral spp vector)
+
+#fill in "shape" column based on the coral species
+for(i in 1:length(coral_spp)){
+  specific_species <- as.vector(which(cushions_orig$coral_spp_general == coral_spp[i]))
+  cushions_orig[specific_species, 55] <- coral_shapes[i]
+}
+```
+
+```{r surface area functions}
+#cylinder
+#use the max diameter and orthogonal diameter to calculate the average diameter
+#divide average diameter by 2 to get average radius
+#SA of cylinder = (2*pi*average radius*height) + (2*pi*(average radius ^2))
+cylinder <- function(d1,d2, h){
+  avg_d <- (d1+d2)/2
+  avg_r <- avg_d/2
+  SA <- 2*pi*avg_r*h+2*pi*avg_r^2
+  return(SA)
+}
+# cylinder(cushions_orig[2, 32], cushions_orig[2, 33], cushions_orig[2, 34]) #test function
+
+#hemisphere
+#use the max diameter and orthogonal diameter to calculate the average diameter
+#divide average diameter by 2 to get average radius
+#SA of hemisphere = 2*pi*avg r*height + pi*(average radius ^2)
+hemisphere <- function(d1, d2, h){
+  avg_d <- (d1+d2)/2
+  avg_r <- avg_d/2
+  SA <- 2*pi*avg_r*h + pi*avg_r^2
+  return(SA)
+}
+# hemisphere(cushions_orig[1, 32], cushions_orig[1, 33], cushions_orig[1, 34])#test function
+
+#rectangular plate
+#The area of a rectangle was calculated by the max diameter and orthogonal diamter and the result was doubled to represent both sides of the plate.
+#The side of the corals was calculated as a rectangle from the max diameter and orthogonal diamter and the plate thickness, and subsequently added.
+#top/bottom = max diameter * orthogonal diameter * 2
+#side = (max diameter*2)+(orthogonal diameter*2) * height
+rec_plate <- function(d1, d2, h){
+  top_bottom <- d1*d2*2
+  side <- (d1*2+d2*2)*h
+  SA <- top_bottom+side
+  return(SA)
+}
+# rec_plate(cushions_orig[29, 32], cushions_orig[29, 33], cushions_orig[29, 34]) #test function
+
+#disk
+#A Fungia polyp resembles a disc, which is composed of ellipse sides and a rectangular side. 
+#use the max diameter and orthogonal diameter to calculate area of an ellipse and multiply by 2
+#use the max diameter and orthogonal diameter to calculate perimeter of an ellipse and multiply by the height
+#area of an ellipse = pi * max diameter * orthogonal diameter
+#rectangular side = perimeter * height = 2*pi*sqrt((max diamater^2 + orthogonal diameter^2)/2)*height
+disk <- function(d1, d2, h){
+  ellipses <- pi*d1*d2*2
+  perimeter <- 2*pi*sqrt((d1^2+d2^2)/2)
+  rect_side <- perimeter*h
+  SA <- ellipses+rect_side
+  return(SA)
+}
+# disk(cushions_orig[21, 32], cushions_orig[21, 33], cushions_orig[21, 34]) #test function
+```
+
+```{r volume functions}
+#cylinder
+#use the max diameter and orthogonal diameter to calculate the average diameter
+#divide average diameter by 2 to get average radius
+#V of cylinder = pi* (r^2) * h
+cylinder_V <- function(d1,d2, h){
+  avg_d <- (d1+d2)/2
+  avg_r <- avg_d/2
+  V <- pi * (avg_r^2) * h
+  return(V)
+}
+
+#hemisphere
+#use the max diameter and orthogonal diameter to calculate the average diameter
+#divide average diameter by 2 to get average radius
+#V of hemisphere = (2/3)*pi*(r^3)
+hemisphere_V <- function(d1, d2, h){
+  avg_d <- (d1+d2)/2
+  avg_r <- avg_d/2
+  V <- (2/3)*pi*(avg_r^3)
+  return(V)
+}
+
+#rectangular plate
+#The area of a rectangle was calculated by the max diameter and orthogonal diameter and the result was doubled to represent both sides of the plate.
+#The side of the corals was calculated as a rectangle from the max diameter and orthogonal diamter and the plate thickness, and subsequently added.
+#volume = l * w * h
+rec_plate_V <- function(d1, d2, h){
+  V = d1*d2*h
+  return(V)
+}
+
+#disk
+#A Fungia polyp resembles a disc, which is composed of ellipse sides and a rectangular side. 
+#volume of an ellipse = pi * max diameter * orthogonal diameter * height
+disk_V <- function(d1, d2, h){
+  V <- pi*d1*d2*h
+  return(V)
+}
+
+
+```
+
+```{r calculate SA of whole fragment}
+cushions_orig$frag_SA <- c(NA) #create a column in data frame to calculate SA of whole fragment
+
+#calculate SA of hemisphere fragments
+specific_species <- as.vector(which(cushions_orig$shape == "hemisphere"))
+cushions_orig[specific_species, 56] <- round(hemisphere(cushions_orig[specific_species, 32],
+                                                        cushions_orig[specific_species, 33],
+                                                        cushions_orig[specific_species, 34]), 2)
+
+#calculate SA of cylinder fragments
+specific_species <- as.vector(which(cushions_orig$shape == "cylinder"))
+cushions_orig[specific_species, 56] <- round(cylinder(cushions_orig[specific_species, 32],
+                                                cushions_orig[specific_species, 33],
+                                                cushions_orig[specific_species, 34]),2)
+
+#calculate SA of disk fragments
+specific_species <- as.vector(which(cushions_orig$shape == "disk"))
+cushions_orig[specific_species, 56] <- round(disk(cushions_orig[specific_species, 32], 
+                                            cushions_orig[specific_species, 33], 
+                                            cushions_orig[specific_species, 34]), 2)
+
+#calculate SA of rectangular plate fragments
+specific_species <- as.vector(which(cushions_orig$shape == "rec_plate"))
+cushions_orig[specific_species, 56] <- round(rec_plate(cushions_orig[specific_species, 32],
+                                                       cushions_orig[specific_species, 33],
+                                                       cushions_orig[specific_species, 34]),2)
+```
+
+```{r calculate SA live tissue start & end}
+cushions_orig$SA_live_start <- round(((cushions_orig$p_alive_start_1/100)*cushions_orig$frag_SA),2)
+cushions_orig$SA_live_end <- round(((cushions_orig$p_alive_end_1/100)*cushions_orig$frag_SA),2)
+```
+
+```{r mean and SE for starting SA }
+mean(cushions_orig$SA_live_start)
+sd(cushions_orig$SA_live_start)
+sd(cushions_orig$SA_live_start)/sqrt(nrow(cushions_orig))
+range(cushions_orig$SA_live_start)
+```
+
+```{r percent consumed for each fragment}
+cushions_eaten <- subset(cushions_orig, ate == "YES", select = c(coral_spp_general, SA_live_start, SA_live_end))
+
+cushions_eaten$perc_consumed <- round(((cushions_eaten$SA_live_start -
+                                   cushions_eaten$SA_live_end)/cushions_eaten$SA_live_start*100), 2)
+cushions_eaten
+```
+
+```{r average of percent consumed by species}
+#calculate average of percent consumed by species
+P_consumed_spp_mean <- tapply(cushions_eaten$perc_consumed, cushions_eaten$coral_spp_general, mean)  
+# P_consumed_spp_mean
+
+#calculate SD of percent consumed by species
+P_consumed_spp_SD <- tapply(cushions_eaten$perc_consumed, cushions_eaten$coral_spp_general, sd)  
+
+n <- table(cushions_eaten$coral_spp_general)
+P_consumed_spp_SE <- P_consumed_spp_SD/sqrt(n)
+# P_consumed_spp_SD
+
+P_consumed_spp <- cbind(P_consumed_spp_mean, P_consumed_spp_SD, P_consumed_spp_SE)
+P_consumed_spp
+```
+
+```{r feeding efficiency graph w/ SD}
+P_consumed_spp2 <- P_consumed_spp #make a copy of the percent consumed table
+P_consumed_spp2 <- as.data.frame(P_consumed_spp2) #turn into a data frame
+P_consumed_spp2 <- P_consumed_spp[order(P_consumed_spp2$P_consumed_spp_mean, decreasing = T),] #sort in descending ord
+P_consumed_spp2 <- as.data.frame(P_consumed_spp2) #turn into a data frame again
+species <- c("PDUE", "FSCU", "POSP", "PVAR","MCAP", "MPAT", "LESP", "PCOM", "PORM") #make a vector of the spp codes to add to the graph
+P_consumed_spp2 <- cbind(P_consumed_spp2, species) #add the spp codes again for graphing
+P_consumed_spp2
+P_consumed_spp2$species <- factor(P_consumed_spp2$species, levels = c("PDUE", "FSCU", "POSP", "PVAR","MCAP", "MPAT", "LESP", "PCOM", "PORM")) #organize in the order that I want it to be plotted
+# str(P_consumed_spp2)
+
+#new labels for the x axis
+corals <- c(expression(italic("Pavona\nduerdeni")), 
+            expression(italic("Lobactis\nscutaria")),
+            expression(italic("Pocillopora\nspecies")),
+            expression(italic("Pavona\nvarians")), 
+            expression(italic("Montipora\ncapitata")), 
+            expression(italic("Montipora\npatula")), 
+            expression(italic("Leptastrea\nspecies")),
+            expression(italic("Porites\ncompressa")),  
+            expression(italic("Porites\nmounding")))
+   
+fill_col <- "#B8DCBB" #color for the bars
+
+ggplot(data = P_consumed_spp2) +
+  geom_col(aes(x = species, y = P_consumed_spp_mean), fill = fill_col) + #plotting the % change in live tissue and use green 
+  theme_classic() + #background type
+  xlab("Coral species") + #x-axis label
+  ylab("Percent change") + #y axis label
+  scale_x_discrete(labels = corals) + #use "corals" vector to label x axis tick marks
+  theme(axis.text.x = element_text(size = 10, 
+                                   vjust = 0,
+                                   angle = 90, 
+                                   hjust = 1,
+                                   lineheight=1)) + #formatting the x axis tick marks
+  geom_errorbar(data = P_consumed_spp2, #use this data
+                aes(x=species, #x values
+                    ymin = (P_consumed_spp_mean - P_consumed_spp_SD), #min values for error bars
+                    ymax = ifelse(P_consumed_spp_mean + P_consumed_spp_SD >100, 100, P_consumed_spp_mean + P_consumed_spp_SD)),
+                    #for the y max, use mean + SD, but if it's over 100 then stop the erorr bar at 100
+                linetype = 1, 
+                size = 0.5,
+                width = 0.2) +
+   scale_y_continuous(limits = c(0, 100))
+
+# ggsave("Fig 3_feeding efficiency.png", plot = last_plot(), dpi = 300, width = 100, height = 146, path = "/Users/danielaescontrela/Desktop/feeding_trial/figures", limitsize = F)
+```
+ 
+```{r compare SA of live tissue of fragments, test diff}
+#extract SA for coral fragments assigned "1"
+coral_frag_1 <- subset(cushions_orig, coral_n == 1, select = SA_live_start)
+coral_frag_1 <- coral_frag_1[,1]
+#extract SA for coral fragments assigned "2"
+coral_frag_2 <- subset(cushions_orig, coral_n == 2, select = SA_live_start)
+coral_frag_2 <- coral_frag_2[,1]
+
+#paired t test because try to do pairwise comparisons between the two fragments for each trial
+#hypothesis_0: there is no difference in SA between coral fragments assigned "1" and fragments assigned "2"
+#hypothesis_A: there is a difference in SA
+t.test(x=coral_frag_1, y=coral_frag_2, alternative="two.sided", mu=0, paired = T, var.equal = F, conf.level=0.95)
+#p>>0.05
+#not significantly different, fail to reject the null hypotheses, SA of fragments approximately equal
+
+#calculate pairwise difference in coral fragment Surface areas
+diff <- coral_frag_1 - coral_frag_2
+#mean of those differences
+mean(diff)
+#95% confidence interval
+qnorm(p=c(0.025, 0.975), mean(diff), sd(diff)/length(diff))
+```
+
+```{r compare max width of fragments}
+#extract max_d for coral fragments assigned "1"
+coral_frag_1_max_d <- subset(cushions_orig, coral_n == 1, select = max_d_1)
+coral_frag_1_max_d <- coral_frag_1_max_d[,1]
+
+#extract max_d for coral fragments assigned "2"
+coral_frag_2_max_d <- subset(cushions_orig, coral_n == 2, select = max_d_1)
+coral_frag_2_max_d <- coral_frag_2_max_d[,1]
+
+#paired t test because try to do pairwise comparisons between the two fragments for each trial
+#hypothesis_0: there is no difference in SA between coral fragments assigned "1" and fragments assigned "2"
+#hypothesis_A: there is a difference in SA
+t.test(x=coral_frag_1_max_d, y=coral_frag_2_max_d, alternative="two.sided", mu=0, paired = T, var.equal = F, conf.level=0.95)
+#p>>0.05
+#not significantly different, fail to reject the null hypotheses, SA of fragments approximately equal
+
+#calculate pairwise difference in coral fragment Surface areas
+diff <- coral_frag_1_max_d - coral_frag_2_max_d
+#mean of those differences
+mean(diff)
+#95% confidence interval
+qnorm(p=c(0.025, 0.975), mean(diff), sd(diff)/length(diff))
+```
+
+```{r times stars used}
+# nrow(cushions_orig)/2
+cuno_tags_count <- table(cushions_orig$tag_n) #makes a table of the tag numbers and how many times they show up
+used_once <- length(which(cuno_tags_count==2)) #how many tags used once? (=2 b/c tags duplicated in rows)  
+used_once
+used_twice <- length(which(cuno_tags_count==4)) #how many tags used twice?
+used_twice
+used_thrice <- length(which(cuno_tags_count==6)) #how many tags used three times?
+used_thrice
+```
+
+```{r number times ate 1, 2, 3}
+n_eaten <- table(cushions_orig$N_eaten)/2 #in how many trials was one coral, two corals or no coral eaten
+n_eaten
+```
+
+```{r unabalanced with all spp}
+#remove rows with "unknown" as consumption order score
+cushions_wo_unk_all <- cushions_orig[!(cushions_orig$ranking_coral == "unknown"),]
+
+ranks <- c("FIRST", "SECOND", "NOT_EATEN") #vector of consumption scores
+# unique(cushions_without_unknown_allspp$coral_spp_general)
+corals <- c("POSP", "MPAT", "MCAP", "PCOM", "PORM", "FSCU", "PVAR", "PDUE", "LESP") #vector of coral spp
+
+#for chi square test: 
+#Observed = total # of times coral ACTUALLY eaten first, second, not eaten
+#Expected = total # of times coral used divided by 3
+
+#figure out how many times each coral spp was used
+corals_used <- c() #empty vector to store values
+for(i in 1:length(corals)) {
+  corals_used[i] <- length(which(cushions_wo_unk_all$coral_spp_general == corals[i]))
+} #counts how many times each coral spp was used & stores in vector
+corals_used
+
+#calculate expected value for chi square test
+expected <- corals_used/3 #number of times corals were used/3 = # of times we expect each species to be eaten first, second, third if consumption is random
+
+#figure out how many times each coral spp was ACTUALLY eaten first, second or not eaten
+first <- c() #empty vector to store how many times eaten first
+second <- c() #empty vector to store how many times eaten second
+not_consumed <- c() #empty vector to store how many times eaten not eaten
+for(i in 1:length(corals)){
+  first[i] <- length(which(cushions_wo_unk_all$coral_spp_general == 
+                             corals[i] & cushions_wo_unk_all$ranking_coral == "FIRST"))
+  second[i] <- length(which(cushions_wo_unk_all$coral_spp_general == corals[i] &
+                              cushions_wo_unk_all$ranking_coral == "SECOND"))
+  not_consumed[i] <- length(which(cushions_wo_unk_all$coral_spp_general == corals[i] & 
+                                    cushions_wo_unk_all$ranking_coral == "NOT_EATEN"))
+} #figures out which column has the specific species and was eaten first/second/not eaten and stores them in separate vectors according to consumption order
+# first
+# second
+# not_consumed
+
+#make a table with the coral spp, # of times each spp used, expected number and observed numbers
+results_unbalanced_allspp <- cbind(corals, corals_used, expected, first, second, not_consumed)
+# results_unbalanced_allspp
+
+chi_squared <- c() #empty vector to store chi square values
+p_values <- c() #empty vector to store p values
+#chi_squared = (first_obs-first_exp)^2/first_exp + (second_obs-second_exp)^2/second_exp + (not_obs-not_exp)^2/not_exp
+for(i in 1:length(corals)){
+  #calculate for each coral & consumption score combination the part of the formula above
+  first <- (as.numeric(results_unbalanced_allspp[i,4]) - 
+              as.numeric(results_unbalanced_allspp[i,3]))^2/
+              as.numeric(results_unbalanced_allspp[i,3])
+  second <- (as.numeric(results_unbalanced_allspp[i,5]) - 
+               as.numeric(results_unbalanced_allspp[i,3]))^2/
+               as.numeric(results_unbalanced_allspp[i,3])
+  not <- (as.numeric(results_unbalanced_allspp[i,6]) - 
+              as.numeric(results_unbalanced_allspp[i, 3]))^2/
+              as.numeric(results_unbalanced_allspp[i, 3])
+  chi_squared[i]  <- first + second + not #add up the 3 values from above to get the chi square value for the spp
+  p_values[i] <- pchisq(chi_squared[i], df = 3-1, lower.tail = F) #get the p-value for each spp
+}
+
+
+results_unbalanced_allspp <- cbind(results_unbalanced_allspp, chi_squared,p_values)
+results_unbalanced_allspp
+```
+
+```{r unbalanced without PVAR, PDUE and LESP}
+#remove trials were order unknown
+cushions_wo_unk_comm <- cushions_orig[!(cushions_orig$ranking_coral == "unknown"),]
+#remove trials were leptastrea and pavona were tested
+cushions_wo_unk_comm <- cushions_wo_unk_comm[!(cushions_wo_unk_comm$combo_general_spp == "LESP_PMEA"),]
+cushions_wo_unk_comm <- cushions_wo_unk_comm[!(cushions_wo_unk_comm$combo_general_spp == "PVAR_PMEA"),]
+cushions_wo_unk_comm <- cushions_wo_unk_comm[!(cushions_wo_unk_comm$combo_general_spp == "PDUE_PMEA"),]
+cushions_wo_unk_comm <- cushions_wo_unk_comm[!(cushions_wo_unk_comm$combo_general_spp == "LESP_MPAT"),]
+cushions_wo_unk_comm <- cushions_wo_unk_comm[!(cushions_wo_unk_comm$combo_general_spp == "MPAT_PDUE"),]
+cushions_wo_unk_comm <- cushions_wo_unk_comm[!(cushions_wo_unk_comm$combo_general_spp == "MPAT_PVAR"),]
+
+
+ranks <- c("FIRST", "SECOND", "NOT_EATEN") #vector of consumption scores
+# unique(cushions_without_unknown_allspp$coral_spp_general)
+corals <- c("POSP", "MPAT", "MCAP", "PCOM", "PORM", "FSCU") #vector of coral spp
+
+#for chi square test:
+#Observed = total # of times coral ACTUALLY eaten first, second, not eaten
+#Expected = total # of times coral used divided by 3
+
+#figure out how many times each coral spp was used
+corals_used <- c() #empty vector to store values
+for(i in 1:length(corals)) {
+  corals_used[i] <- length(which(cushions_wo_unk_comm$coral_spp_general == corals[i]))
+} #counts how many times each coral spp was used & stores in vector
+corals_used
+
+#calculate expected value for chi square test
+expected <- corals_used/3 #number of times corals were used/3 = # of times we expect each species to be eaten first, second, third if consumption is random
+
+#figure out how many times each coral spp was ACTUALLY eaten first, second or not eaten
+first <- c() #empty vector to store how many times eaten first
+second <- c() #empty vector to store how many times eaten second
+not_consumed <- c() #empty vector to store how many times eaten not eaten
+for(i in 1:length(corals)){
+  first[i] <- length(which(cushions_wo_unk_comm$coral_spp_general == corals[i] &
+                             cushions_wo_unk_comm$ranking_coral == "FIRST"))
+  second[i] <- length(which(cushions_wo_unk_comm$coral_spp_general == corals[i] &
+                              cushions_wo_unk_comm$ranking_coral == "SECOND"))
+  not_consumed[i] <- length(which(cushions_wo_unk_comm$coral_spp_general == corals[i] &
+                                    cushions_wo_unk_comm$ranking_coral == "NOT_EATEN"))
+} #figures out which column has the specific species and was eaten first/second/not eaten and stores them in separate vectors according to consumption order
+# first
+# second
+# not_consumed
+
+#make a table with the coral spp, # of times each spp used, expected number and observed numbers
+results_unbalanced_common_spp <- cbind(corals, corals_used, expected, first, second, not_consumed)
+# results_unbalanced_common_spp
+
+chi_squared <- c() #empty vector to store chi square values
+p_values <- c() #empty vector to store p values
+#chi_squared = (first_obs-first_exp)^2/first_exp + (second_obs-second_exp)^2/second_exp + (not_obs-not_exp)^2/not_exp
+for(i in 1:length(corals)){
+  #calculate for each coral & consumption score combination the part of the formula above
+  first <- (as.numeric(results_unbalanced_common_spp[i,4]) -
+              as.numeric(results_unbalanced_common_spp[i,3]))^2/
+              as.numeric(results_unbalanced_common_spp[i,3])
+  second <- (as.numeric(results_unbalanced_common_spp[i,5]) -
+               as.numeric(results_unbalanced_common_spp[i,3]))^2/
+               as.numeric(results_unbalanced_common_spp[i,3])
+  not <- (as.numeric(results_unbalanced_common_spp[i,6]) -
+              as.numeric(results_unbalanced_common_spp[i, 3]))^2/
+              as.numeric(results_unbalanced_common_spp[i, 3])
+  chi_squared[i]  <- first + second + not #add up the 3 values from above to get the chi square value for the spp
+  p_values[i] <- pchisq(chi_squared[i], df = 3-1, lower.tail = F) #get the p-value for each spp
+}
+
+
+results_unbalanced_common_spp <- cbind(results_unbalanced_common_spp, chi_squared,p_values)
+results_unbalanced_common_spp
+```
+
+```{r balanced without PVAR, PDUE and LESP}
+set.seed(123)
+#use data frame without unknowns, lept and pav
+#create a vector of the coral combination names
+combos <- as.vector(unique(cushions_wo_unk_comm$combo_general_spp)) #use these to extract data and to name data frames
+
+#split the data by coral species combinations tested
+split_data <- split(cushions_wo_unk_comm, fct_inorder(factor(cushions_wo_unk_comm$combo_general_spp))) #second argument ensure data is split in the same order as "combos" above
+
+#stuff to be used in the for loop
+samples <- vector("list", 1000) #for storing the new data sets
+add <- rep(1, 5) #used in the for loop (to add to the randomly sampled vector of rows)
+newnames <- colnames(cushions_wo_unk_comm) #will need to make sure the column names are all the same in order to combine the data frames
+
+#for(i in 1:length(combos)) will first run through each combination and extract data (i.e. goes through all the combos first)
+#for(j in 1:1000) when j =1, once done running through all the combinations once, will store in first list
+#then, for loop will go through all the combos again and store in list 2, etc.
+for(j in 1:1000){
+  for(i in 1:length(combos)){
+    dat_use <- as.data.frame(split_data[i]) #pick the data for each iteration of the for loop
+    length <- nrow(dat_use)/2 #how many rows in the data frame and deivide by 2
+    vector <- seq(1, by = 2, len = length) #create a vector of odd numbers that matches the data frame
+    random_n <- sample(vector, 5, replace = F) #sample only from odd numbers (w/o replacement)
+    random_match <- random_n + add #create a vector of the sampled rows above plus one (i.e. the match for the row picked b/c 2 rows per trial of data)
+    extract <- c(random_n, random_match) #combine the two vectors
+    subsample1 <- dat_use[extract,] #extract the data
+    names(subsample1) <- newnames #rename the columns so everything matches
+    samples[[j]]<- rbind(samples[[j]], subsample1) #every time the loop repeats, keep adding data to the data frame
+  }
+}
+
+
+#stuff to be used in the for loop
+corals <- c("POSP", "MPAT", "MCAP", "PCOM", "PORM", "FSCU") #vector of coral spp
+expected <- 25/3 #with balanced, each coral tested 25 times. to get expected for eaten first, second etc divide 25 by 3
+results <- data.frame(matrix(ncol = 0, nrow = 6)) #data frame to store the results of each iteration
+results <- cbind(corals, results) #add column names for each species
+
+
+#first iteration, j=1 and i=1 -- will go through and calculate all the values for species 1 (i.e. pocillopora), using list 1 of data and will store the p value in the results data frame in row i (for POSP), column j+1
+#once^^done, will do j=1, i=2 -- will do the same for the next species but still using list 1 of data
+#once it has gone through all the species in list 1 of data, will switch to list 2 and repeat the process for all the species using these data
+for(j in 1:1000){
+  for(i in 1:length(corals)){
+      dat_use <- samples[[j]]
+      first_obs <- length(which(dat_use$coral_spp_general == corals[i] &
+                             dat_use$ranking_coral == "FIRST"))
+      second_obs <- length(which(dat_use$coral_spp_general == corals[i] &
+                              dat_use$ranking_coral == "SECOND"))
+      not_consumed_obs <- length(which(dat_use$coral_spp_general == corals[i] &
+                                    dat_use$ranking_coral == "NOT_EATEN"))
+      first <- (first_obs - expected)^2/expected
+      second <- (second_obs - expected)^2/expected
+      not_eaten <- (not_consumed_obs - expected)^2/expected
+      chi_squared  <- first + second + not_eaten #add up the 3 values from above to get the chi square value for the spp
+      results[i, (j+1)] <- pchisq(chi_squared, df = 3-1, lower.tail = F) #get the p-value for each spp
+  }
+}
+
+less_than_0.05 <- c()
+more_than_0.05 <- c()
+for(i in 1:length(corals)){
+  less_than_0.05[i] <- round(length(which(results[i, c(2:1001)] <= 0.05))/1000, 2)
+  more_than_0.05[i] <- round(length(which(results[i, c(2:1001)] > 0.05))/1000, 2)
+}
+
+results_balanced_comm_spp <- cbind(corals, less_than_0.05, more_than_0.05)
+results_balanced_comm_spp
+```
+
+```{r assign genera}
+cushions_orig$genera <- c(NA) #create an empty column in data frame
+
+coral_spp <- as.vector(unique(cushions_orig$coral_spp_general)) #create a vector w/ the coral spp
+# coral_spp
+
+coral_genera <- c("porites", "pocillopora", "fungia", "montipora", "porites", "montipora", "leptastrea", "pavona", "pavona") #create vector of genera that matches the order of the spp vector above
+
+#fill in "genera" column based on the coral species
+for(i in 1:length(coral_spp)){
+  specific_species <- as.vector(which(cushions_orig$coral_spp_general == coral_spp[i]))
+  cushions_orig[specific_species, 59] <- coral_genera[i]
+}
+cushions_orig$genera <- as.factor(cushions_orig$genera)
+# unique(cushions_orig$genera)
+```
+
+```{r unbalanced chi square test by genera}
+#remove trials were order unknown
+cushions_wo_unk_genera <- cushions_orig[!(cushions_orig$ranking_coral == "unknown"),]
+
+
+ranks <- c("FIRST", "SECOND", "NOT_EATEN") #vector of consumption scores
+# unique(cushions_wo_unk_genera$genera)
+genera <- c("porites", "pocillopora", "fungia", "montipora", "leptastrea", "pavona") #vector of coral genera
+
+#for chi square test:
+#Observed = total # of times coral ACTUALLY eaten first, second, not eaten
+#Expected = total # of times coral used divided by 3
+
+#figure out how many times each coral genera was used
+corals_used <- c() #empty vector to store values
+for(i in 1:length(genera)) {
+  corals_used[i] <- length(which(cushions_wo_unk_genera$genera == genera[i]))
+} #counts how many times each coral spp was used & stores in vector
+# corals_used
+
+
+#calculate expected value for chi square test
+expected <- corals_used/3 #number of times corals were used/3 = # of times we expect each species to be eaten first, second, third if consumption is random
+
+#figure out how many times each coral spp was ACTUALLY eaten first, second or not eaten
+first <- c() #empty vector to store how many times eaten first
+second <- c() #empty vector to store how many times eaten second
+not_consumed <- c() #empty vector to store how many times eaten not eaten
+for(i in 1:length(genera)){
+  first[i] <- length(which(cushions_wo_unk_genera$genera == genera[i] &
+                             cushions_wo_unk_genera$ranking_coral == "FIRST"))
+  second[i] <- length(which(cushions_wo_unk_genera$genera == genera[i] &
+                              cushions_wo_unk_genera$ranking_coral == "SECOND"))
+  not_consumed[i] <- length(which(cushions_wo_unk_genera$genera == genera[i] &
+                                    cushions_wo_unk_genera$ranking_coral == "NOT_EATEN"))
+} #figures out which column has the specific genus and was eaten first/second/not eaten and stores them in separate vectors according to consumption order #this is the observed value
+# first
+# second
+# not_consumed
+
+#make a table with the coral genera, # of times each spp used, expected number and observed numbers
+results_unbalanced_genera <- cbind(genera, corals_used, expected, first, second, not_consumed)
+# results_unbalanced_genera
+
+chi_squared <- c() #empty vector to store chi square values
+p_values <- c() #empty vector to store p values
+#chi_squared = (first_obs-first_exp)^2/first_exp + (second_obs-second_exp)^2/second_exp + (not_obs-not_exp)^2/not_exp
+for(i in 1:length(genera)){
+  #calculate for each coral & consumption score combination the part of the formula above
+  first <- (as.numeric(results_unbalanced_genera[i,4]) -
+              as.numeric(results_unbalanced_genera[i,3]))^2/
+              as.numeric(results_unbalanced_genera[i,3])
+  second <- (as.numeric(results_unbalanced_genera[i,5]) -
+               as.numeric(results_unbalanced_genera[i,3]))^2/
+               as.numeric(results_unbalanced_genera[i,3])
+  not <- (as.numeric(results_unbalanced_genera[i,6]) -
+              as.numeric(results_unbalanced_genera[i, 3]))^2/
+              as.numeric(results_unbalanced_genera[i, 3])
+  chi_squared[i]  <- first + second + not #add up the 3 values from above to get the chi square value for the spp
+  p_values[i] <- pchisq(chi_squared[i], df = 3-1, lower.tail = F) #get the p-value for each spp
+}
+
+
+results_unbalanced_genera <- cbind(results_unbalanced_genera, chi_squared,p_values)
+results_unbalanced_genera
+```
+
+```{r rank - proportion eaten first}
+coral_spp <- as.vector(unique(cushions_orig$coral_spp_general))#create a vector of coral spp used
+
+corals_used <- c() #empty vector to store values
+for(i in 1:length(coral_spp)) {
+  corals_used[i] <- length(which(cushions_orig$coral_spp_general == coral_spp[i]))
+} #counts how many times each coral spp was used & stores in vector
+
+first <- c()
+for(i in 1:length(coral_spp)){
+  first[i] <- length(which(cushions_orig$coral_spp_general == coral_spp[i] &
+                             cushions_orig$ranking_coral == "FIRST"))
+} #figures out which column has the specific coral spp and was eaten first and stores them in  vector 
+
+prop_first <- as.data.frame(cbind(coral_spp, corals_used, first)) #create data frame of the results from the for loops
+prop_first$corals_used <- as.numeric(prop_first$corals_used) #turn columns to numbers
+prop_first$first <- as.numeric(prop_first$first) #turn columns to numbers
+# str(prop_first)
+
+prop <- (prop_first$first/prop_first$corals_used)*100 #calculate proportion of times each coral was eaten first
+prop_first <- cbind(prop_first, prop) #add proportion values to data frame
+prop_first <- prop_first[order(prop_first$prop, decreasing = T),] #sort in descending order
+prop_first
+```
+
+```{r ranking - proportion of times eaten}
+coral_spp <- as.vector(unique(cushions_orig$coral_spp_general))#create a vector of coral spp used
+
+corals_used <- c() #empty vector to store values
+for(i in 1:length(coral_spp)) {
+  corals_used[i] <- length(which(cushions_orig$coral_spp_general == coral_spp[i]))
+} #counts how many times each coral spp was used & stores in vector
+
+eaten <- c()
+for(i in 1:length(coral_spp)){
+  eaten[i] <- length(which(cushions_orig$coral_spp_general == coral_spp[i] &
+                             cushions_orig$ate == "YES"))
+} #figures out which column has the specific coral spp and was eaten
+
+prop_eaten<- as.data.frame(cbind(coral_spp, corals_used, eaten)) #create data frame of the results from the for loops
+prop_eaten$corals_used <- as.numeric(prop_eaten$corals_used) #turn columns to numbers
+prop_eaten$eaten <- as.numeric(prop_eaten$eaten) #turn columns to numbers
+
+prop <- (prop_eaten$eaten/prop_eaten$corals_used)*100 #calculate proportion of times each coral was eaten first
+prop_eaten <- cbind(prop_eaten, prop) #add proportion values to data frame
+prop_eaten <- prop_eaten[order(prop_eaten$prop, decreasing = T),] #sort in descending order
+prop_eaten
+
+```
+
+```{r assign score to each ranking}
+# eaten first = score of 1
+# eaten second = score of 0.5
+# not eaten = 0 
+
+cushions_wo_unk_all <- cushions_orig[!(cushions_orig$ranking_coral == "unknown"),] #remove unknowns
+cushions_wo_unk_all$score <- c(NA) #create an empty column in data frame
+
+coral_ranking <- as.vector(unique(cushions_wo_unk_all$ranking_coral)) #create a vector w/ the coral rankings
+# coral_ranking
+
+scores <- c(0, 1, 0.5) #create vector of scores that matches the order of the rankings vector
+
+#fill in "score" column based on the coral species
+for(i in 1:length(coral_ranking)){
+  specific_rankings <- as.vector(which(cushions_wo_unk_all$ranking_coral == coral_ranking[i]))
+  cushions_wo_unk_all[specific_rankings, 60] <- scores[i]
+}
+# str(cushions_wo_unk_all)
+```
+
+```{r ranking - weighed score}
+score <- tapply(cushions_wo_unk_all$score, cushions_wo_unk_all$coral_spp_general, mean) #calculate mean score by spp
+spp <- c("FSCU", "LESP", "MCAP", "MPAT", "PCOM", "PDUE", "PORM", "POSP", "PVAR") #vector of spp
+weighed_score <- cbind(spp, score) #bind score and spp vectors
+weighed_score <- as.data.frame.matrix(weighed_score) #turn to data frame
+weighed_score <- weighed_score[order(weighed_score$score, decreasing = T),] #arrange in decreasing order
+weighed_score  
+```
+
+```{r assign score to eaten & not eaten}
+#eaten = 1
+#not eaten = 2
+cushions_orig$eatscore <- c(NA) #create an empty column in data frame
+
+eaten <- c("YES", "NO") #create a vector w/  2 eaten categories
+
+score <- c(1, 0) #create vector of scores that matches the order of the "spp"ate" vector above
+
+#fill in "eatscore" column based on the "coral species"ate" status
+for(i in 1:length(eaten)){
+  status <- as.vector(which(cushions_orig$ate == eaten[i]))
+  cushions_orig[status, 60] <- score[i]
+}
+
+# str(cushions_orig)
+```
+
+```{r number of trials per combination}
+table(cushions_orig$combo_general_spp)/2
+```
+
+```{r plot of feeding preferences_all spp - new colors}
+# levels(cushions$coral_spp_general)
+# str(cushions)
+# table(cushions$coral_spp_general)
+cushions_orig$coral_spp_general <- factor(cushions_orig$coral_spp_general, levels = c("POSP", "MPAT", "PDUE", "PVAR", "MCAP", "FSCU", "PCOM", "LESP", "PORM")) #organize species in order you want plotted
+
+cushions_orig$ranking_coral <- factor(cushions_orig$ranking_coral, levels = c("NOT_EATEN","unknown", "SECOND", "FIRST")) #organize rankings for what you want at the top, bottom ex of each column
+
+leg_labels <- c("Not eaten", "Eaten (order unknown)", "Eaten Second", "Eaten First") #legend labels
+fill_cols <- c("#C18686", "#F3B278", "#E8E881", "#B8DCBB") #colors to use
+
+
+# expression(atop(italic("Pocillopora"),"species")), 
+corals <- c(expression(italic("Pocillopora\nspecies")),
+            expression(italic("Montipora\npatula")), 
+            expression(italic("Pavona\nduerdeni")), 
+            expression(italic("Pavona\nvarians")), 
+            expression(italic("Montipora\ncapitata")), 
+            expression(italic("Lobactis\nscutaria")),
+            expression(italic("Porites\ncompressa")),  
+            expression(italic("Leptastrea\nspecies")),  
+            expression(italic("Porites\nmounding")))
+
+# Number <- c(71, 64, 13, 14, 36, 26, 39, 14, 41)
+
+
+ggplot(data = cushions_orig, aes(x=coral_spp_general, fill = ranking_coral)) +
+  geom_bar(position = "fill") +
+  scale_fill_manual(name = "", labels = leg_labels, values = fill_cols,   
+                    guide = guide_legend(reverse = F)) +
+  scale_x_discrete(labels = corals) +
+  xlab("Coral Species") + 
+  ylab("Proportion") +
+  theme_classic() +
+  theme(legend.text=element_text(size=10), 
+        axis.text.x = element_text(size = 10, vjust = 0.5,
+                                   angle = 90, hjust = 0.5,
+                                   lineheight=1),   
+        axis.text.y = element_text(size = 10, hjust = -1.5), 
+        axis.title.x = element_text(size = 10)) 
+
+# ggsave("Fig 2_feeding hierarchy.png", plot = last_plot(), width = 9, height = 6, path ="/Users/danielaescontrela/Desktop/feeding_trial/figures")
+```
+
+```{r calculate volume of whole fragment, test diff}
+cushions_orig$frag_V <- c(NA) #create a column in data frame to calculate SA of whole fragment
+
+#calculate V of hemisphere fragments
+specific_species <- as.vector(which(cushions_orig$shape == "hemisphere"))
+cushions_orig[specific_species, 61] <- round(hemisphere_V(cushions_orig[specific_species, 32],
+                                                        cushions_orig[specific_species, 33],
+                                                        cushions_orig[specific_species, 34]), 2)
+
+#calculate V of cylinder fragments
+specific_species <- as.vector(which(cushions_orig$shape == "cylinder"))
+cushions_orig[specific_species, 61] <- round(cylinder_V(cushions_orig[specific_species, 32],
+                                                cushions_orig[specific_species, 33],
+                                                cushions_orig[specific_species, 34]),2)
+
+#calculate V of disk fragments
+specific_species <- as.vector(which(cushions_orig$shape == "disk"))
+cushions_orig[specific_species, 61] <- round(disk_V(cushions_orig[specific_species, 32], 
+                                            cushions_orig[specific_species, 33], 
+                                            cushions_orig[specific_species, 34]), 2)
+
+#calculate V of rectangular plate fragments
+specific_species <- as.vector(which(cushions_orig$shape == "rec_plate"))
+cushions_orig[specific_species, 61] <- round(rec_plate_V(cushions_orig[specific_species, 32],
+                                                       cushions_orig[specific_species, 33],
+                                                       cushions_orig[specific_species, 34]),2)
+
+
+coral_frag_1 <- subset(cushions_orig, coral_n == 1, select = frag_V)
+coral_frag_1 <- coral_frag_1[,1]
+
+#extract SA for coral fragments assigned "2"
+coral_frag_2 <- subset(cushions_orig, coral_n == 2, select = frag_V)
+coral_frag_2 <- coral_frag_2[,1]
+
+#paired t test because try to do pairwise comparisons between the two fragments for each trial
+#hypothesis_0: there is no difference in SA between coral fragments assigned "1" and fragments assigned "2"
+#hypothesis_A: there is a difference in SA
+t.test(x=coral_frag_1, y=coral_frag_2, alternative="two.sided", mu=0, paired = T, var.equal = F, conf.level=0.95)
+#p>>0.05
+#not significantly different, fail to reject the null hypotheses, SA of fragments approximately equal
+
+
+#95% confidence interval
+qnorm(p=c(0.025, 0.975), mean(diff), sd(diff)/length(diff))
+min(cushions_orig$frag_V)
+max(cushions_orig$frag_V)
+mean(cushions_orig$frag_V)
+sd(cushions_orig$frag_V)
+```
+
+```{r calculate ratio of large to small fragment and metrics}
+#extract sizes
+coral_sizes <- cushions_orig %>%
+  select(Exp_n, coral_n, SA_live_start, frag_V)
+
+#turn from long to wide format
+coral_sizes_wide <- coral_sizes %>%
+  pivot_wider(
+    id_cols = Exp_n,
+    names_from = coral_n,
+    values_from = c(SA_live_start, frag_V),
+    names_glue = "{.value}_coral{coral_n}"
+  )
+coral_sizes_wide <- as.data.frame(coral_sizes_wide)
+
+#move max values to one column and min to the other
+coral_sizes_ordered <- coral_sizes_wide %>%
+  rowwise() %>%
+  mutate(
+    SA_live_max = max(SA_live_start_coral1, SA_live_start_coral2),
+    SA_live_min = min(SA_live_start_coral1, SA_live_start_coral2),
+    V_max = max(frag_V_coral1, frag_V_coral2),
+    V_min = min(frag_V_coral1, frag_V_coral2)
+  ) %>%
+  ungroup() %>%
+  select(
+    -SA_live_start_coral1, -SA_live_start_coral2,
+    -frag_V_coral1, -frag_V_coral2
+  ) 
+
+#calculate ratios
+coral_sizes_ordered <- coral_sizes_ordered %>%
+  mutate(
+    SA_ratio = SA_live_max/SA_live_min,
+    V_ratio = V_max/V_min
+  )
+
+#sort by SA ratio
+coral_sizes_ordered <- coral_sizes_ordered %>%
+  arrange(SA_ratio)
+# coral_sizes_ordered
+
+print("SA")
+paste("median = ", median(coral_sizes_ordered$SA_ratio), sep = "")
+paste("mean = ", mean(coral_sizes_ordered$SA_ratio), sep = "")
+paste("sd = ", sd(coral_sizes_ordered$SA_ratio), sep = "")
+qnorm(p=c(0.025, 0.975), 
+      mean(coral_sizes_ordered$SA_ratio), 
+      sd(coral_sizes_ordered$SA_ratio)/length(coral_sizes_ordered$SA_ratio))
+#identify outliers
+coral_sizes_ordered %>% identify_outliers(SA_ratio)
+
+
+print("Vol")
+paste("median = ", median(coral_sizes_ordered$V_ratio), sep = "")
+paste("mean = ", mean(coral_sizes_ordered$V_ratio), sep = "")
+paste("sd = ", sd(coral_sizes_ordered$V_ratio), sep = "")
+qnorm(p=c(0.025, 0.975), 
+      mean(coral_sizes_ordered$V_ratio), 
+      sd(coral_sizes_ordered$V_ratio)/length(coral_sizes_ordered$V_ratio))
+#identify outliers
+coral_sizes_ordered %>% identify_outliers(V_ratio)
+
+
+```
